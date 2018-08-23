@@ -18,12 +18,14 @@ class ViewController: UIViewController {
     struct Keys {
         static let index = "index"
     }
+    
     var imageIndex : Int = 1 {
         didSet {
             label.text = "\(imageIndex) / 5"
             imageView.image = UIImage(named : "Cat\(imageIndex)")
             prevButton.isEnabled = imageIndex > 1
             nextButton.isEnabled = imageIndex < 5
+            UserDefaults.standard.set(imageIndex, forKey: Keys.index)
         }
     }
     
@@ -39,24 +41,11 @@ class ViewController: UIViewController {
         }
     }
     
-    func updateIndex() {
-        label.text = "\(imageIndex) / 5"
-        imageView.image = UIImage(named : "Cat\(imageIndex)")
-        UserDefaults.standard.set(imageIndex, forKey: Keys.index)
-    }
-    
-    
     @IBAction func onButtonPrev(_ sender: UIButton) {
-        if(imageIndex <= 5 && imageIndex > 1) {
-            imageIndex -= 1
-            updateIndex()
-        }
+        imageIndex -= 1
     }
     @IBAction func onButtonNext(_ sender: UIButton) {
-        if(imageIndex >= 1 && imageIndex <= 4) {
-            imageIndex += 1
-            updateIndex()
-        }
+        imageIndex += 1
     }
 }
 
